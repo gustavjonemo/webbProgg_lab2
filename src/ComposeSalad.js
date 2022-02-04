@@ -1,5 +1,5 @@
 import { Component } from "react";
-//import { useState } from "react";
+import Salad from "./legacyFunctions";
 
 class ComposeSalad extends Component {
   constructor(props) {
@@ -53,6 +53,24 @@ class ComposeSalad extends Component {
         }, "")
     );
     event.preventDefault();
+
+    let state = this.state;
+    let delishSalad = new Salad()
+      .add(
+        state.foundation,
+        Object.values(this.props.inventory[state.foundation])
+      )
+      .add(state.protein, Object.values(this.props.inventory[state.protein]))
+      .add(state.dressing, Object.values(this.props.inventory[state.dressing]));
+
+    tempExtras.forEach((extra, index) => {
+      if (state.extras[index]) {
+        delishSalad.add(extra, Object.values(this.props.inventory[extra]));
+      }
+    });
+
+    this.props.handleSalad(delishSalad);
+    //this.setState({foundation : '', protein : '', extra : {}, dressing : ''});
   }
 
   render() {
@@ -91,7 +109,6 @@ class ComposeSalad extends Component {
                     ))}
                   </select>
                 </label>
-                <input type="submit" value="Submit" />
                 <div>
                   <label className="p-1">
                     Välj gainz:{" "}
@@ -133,6 +150,12 @@ class ComposeSalad extends Component {
                 ))}
               </select>
             </label>
+          </div>
+
+          <div className="form-group">
+            <button type="submit" className="btn btn-primary" value="Submit">
+              Create salad
+            </button>
           </div>
         </form>
       </div>
