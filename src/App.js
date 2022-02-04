@@ -16,7 +16,7 @@ class App extends Component {
   }
 
   handleSalad(salad) {
-    const tempOrder = this.state.order;
+    const tempOrder = [...this.state.order];
     tempOrder.push(salad);
     this.setState({ order: tempOrder });
   }
