@@ -36,22 +36,7 @@ class ComposeSalad extends Component {
     let tempExtras = Object.keys(this.props.inventory).filter(
       (name) => this.props.inventory[name].extra
     );
-    alert(
-      "Your sallad contains: " +
-        this.state.foundation +
-        " & " +
-        this.state.protein +
-        " & " +
-        this.state.dressing +
-        " & " +
-        tempExtras.reduce((accExtras, currExtra, index) => {
-          if (this.state.extras[index]) {
-            return accExtras + currExtra + ", ";
-          } else {
-            return accExtras;
-          }
-        }, "")
-    );
+
     event.preventDefault();
 
     let state = this.state;
@@ -60,8 +45,7 @@ class ComposeSalad extends Component {
         state.foundation,
         Object.values(this.props.inventory[state.foundation])
       )
-      .add(state.protein, Object.values(this.props.inventory[state.protein]))
-      .add(state.dressing, Object.values(this.props.inventory[state.dressing]));
+      .add(state.protein, Object.values(this.props.inventory[state.protein]));
 
     tempExtras.forEach((extra, index) => {
       if (state.extras[index]) {
@@ -69,8 +53,13 @@ class ComposeSalad extends Component {
       }
     });
 
+    delishSalad.add(
+      state.dressing,
+      Object.values(this.props.inventory[state.dressing])
+    );
+
     this.props.handleSalad(delishSalad);
-    //this.setState({foundation : '', protein : '', extra : {}, dressing : ''});
+    //this.setState({ foundation: "", protein: "", extra: {}, dressing: "" });
   }
 
   render() {
@@ -151,10 +140,10 @@ class ComposeSalad extends Component {
               </select>
             </label>
           </div>
-
           <div className="form-group">
+            <p></p>
             <button type="submit" className="btn btn-primary" value="Submit">
-              Create salad
+              Skapa salad
             </button>
           </div>
         </form>

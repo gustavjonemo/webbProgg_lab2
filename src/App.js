@@ -12,6 +12,7 @@ class App extends Component {
       order: []
     };
     this.handleSalad = this.handleSalad.bind(this);
+    this.resetOrders = this.resetOrders.bind(this);
   }
 
   handleSalad(salad) {
@@ -20,22 +21,9 @@ class App extends Component {
     this.setState({ order: tempOrder });
   }
 
-  /*
-  handleSalad(salad) {
-    let tempExtras = Object.keys(salad).filter((name) => salad[name].extra);
-    let extras = tempExtras.reduce((accExtras, currExtra, index) => {
-      return accExtras + ", " + currExtra;
-    }, "");
-
-    return (
-      <h1>
-        {salad.foundation}, {salad.protein}
-        {extras}, {salad.dressing}
-      </h1>
-    );
-    
+  resetOrders() {
+    this.setState({ order: [] });
   }
-*/
 
   render() {
     return (
@@ -45,14 +33,12 @@ class App extends Component {
         </header>
         <div className="col-12">
           <div className="h-200 p-5 bg-light border rounded-3">
-            <h2>Compose a sallad</h2>
-            <p>This part of the page should be moved to a component</p>
-            <button className="btn btn-outline-secondary" type="button">
-              Button
-            </button>
-
+            <h2>Salladsbaren</h2>
+            <ViewOrder
+              order={this.state.order}
+              handleSubmit={this.resetOrders}
+            />
             <div className="p-2 SalladStuff">
-              <ViewOrder order={this.state.order} />
               <ComposeSalad
                 inventory={inventory}
                 handleSalad={this.handleSalad}
